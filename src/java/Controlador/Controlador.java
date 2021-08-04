@@ -3,6 +3,7 @@ package Controlador;
 import Configuracion.Conexion;
 import Modelos.Activos;
 import Modelos.Funcionario;
+import Modelos.Validacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -88,7 +89,7 @@ public class Controlador {
 
     }
 
-    public void actualizarEstadoFuncionario(String idPersona) {
+    private void actualizarEstadoFuncionario(String idPersona) {
         try {
             conexion = con.conectar();
             ps = conexion.prepareStatement("UPDATE `validacion` SET `estado` = 'revision' "
@@ -96,6 +97,23 @@ public class Controlador {
             ps.executeUpdate();
         } catch (Exception e) {
             System.err.println(e);
+        }
+    }
+    
+    public List<Validacion> mostrarValidaciones(){
+        try {
+            List<Validacion> lista = new ArrayList<>();
+            conexion = con.conectar();
+            ps = conexion.prepareStatement("select * from val_funcionarios");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Validacion val = new Validacion(rs.getString(1), rs.getString(2), rs.getString(3));
+                lista.add(val);
+            }
+            return lista;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
         }
     }
 }

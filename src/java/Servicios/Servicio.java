@@ -3,6 +3,7 @@ package Servicios;
 import Controlador.Controlador;
 import Modelos.Activos;
 import Modelos.Funcionario;
+import Modelos.Validacion;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -29,12 +30,13 @@ public class Servicio {
 
     /**
      * Web service operation
+     *
      * @param ci
-     * @return 
+     * @return
      */
     @WebMethod(operationName = "ListaActivosFuncionario")
     public List<Activos> ListaActivosFuncionario(@WebParam(name = "ci") String ci) {
-        
+
         try {
             return con.obtenerActivosFuncionario(ci);
         } catch (Exception e) {
@@ -45,10 +47,11 @@ public class Servicio {
 
     /**
      * Web service operation
+     *
      * @param cedula
      * @param nombre
      * @param estado
-     * @return 
+     * @return
      */
     @WebMethod(operationName = "guardarValidacion")
     public int guardarValidacion(@WebParam(name = "cedula") String cedula, @WebParam(name = "nombre") String nombre, @WebParam(name = "estado") String estado) {
@@ -59,10 +62,5 @@ public class Servicio {
             return 0;
         }
     }
-
-
-
-    
-
 
 }
