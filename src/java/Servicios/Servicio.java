@@ -2,8 +2,10 @@ package Servicios;
 
 import Controlador.Controlador;
 import Modelos.Activos;
+import Modelos.Administrador;
 import Modelos.Funcionario;
 import Modelos.Validacion;
+import java.sql.Date;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -50,17 +52,63 @@ public class Servicio {
      *
      * @param cedula
      * @param nombre
-     * @param estado
+     * @param fecha
      * @return
      */
     @WebMethod(operationName = "guardarValidacion")
-    public int guardarValidacion(@WebParam(name = "cedula") String cedula, @WebParam(name = "nombre") String nombre, @WebParam(name = "estado") String estado) {
+    public String guardarValidacion(@WebParam(name = "nombre") String nombre, @WebParam(name = "cedula") String cedula, @WebParam(name = "fecha") String fecha) {
         try {
-            return con.guardarFuncionario(cedula, nombre, estado);
+            return con.guardarValidacion(nombre, cedula, fecha);
         } catch (Exception e) {
             System.err.println(e);
-            return 0;
+            return ""+e;
         }
     }
+
+    /**
+     * Web service operation
+     * @param cedula
+     * @return 
+     */
+    @WebMethod(operationName = "listaAdministradores")
+    public List<Administrador> listaAdministradores(@WebParam(name = "cedula")String cedula) {
+        try {
+            return con.listaAdmin(cedula);
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+
+    /**
+     * Web service operation
+     * @param val
+     * @return 
+     */
+    @WebMethod(operationName = "listaValidacion")
+    public List<Funcionario> listaValidacion(@WebParam(name = "val") String val) {
+        try {
+            return con.listaValidacion(val);
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+
+    /**
+     * Web service operation
+     * @return 
+     */
+    @WebMethod(operationName = "ListaValidaciones")
+    public List<Validacion> ListaValidaciones() {
+        try {
+            return con.nombreValidacion();
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+    
+    
 
 }

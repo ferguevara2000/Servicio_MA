@@ -3,23 +3,13 @@ package Modelos;
 
 public class Validacion {
     
-    String ci,nombre,estado;
+    String nombre;
 
     public Validacion() {
     }
 
-    public Validacion(String ci, String nombre, String estado) {
-        this.ci = ci;
+    public Validacion(String nombre) {
         this.nombre = nombre;
-        this.estado = estado;
-    }
-
-    public String getCi() {
-        return ci;
-    }
-
-    public void setCi(String ci) {
-        this.ci = ci;
     }
 
     public String getNombre() {
@@ -30,13 +20,6 @@ public class Validacion {
         this.nombre = nombre;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
     
     
 }
