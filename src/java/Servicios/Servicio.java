@@ -108,6 +108,67 @@ public class Servicio {
             return null;
         }
     }
+
+    /**
+     * Web service operation
+     * @param cedula
+     * @return 
+     */
+    @WebMethod(operationName = "obtenerNumActivos")
+    public int obtenerNumActivos(@WebParam(name = "cedula") String cedula) {
+        try {
+            return con.obtenerNActivos(cedula);
+        } catch (Exception e) {
+            System.err.println(e);
+            return 0;
+        }
+    }
+
+    /**
+     * Web service operation
+     * @param cedula
+     * @return 
+     */
+    @WebMethod(operationName = "listaValFuncionario")
+    public List<Validacion> listaValFuncionario(@WebParam(name = "cedula") String cedula) {
+        try {
+            return con.listaValFuncionario(cedula);
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+
+    /**
+     * Web service operation
+     * @param dato
+     * @return 
+     */
+    @WebMethod(operationName = "busquedaFuncionarios")
+    public List<Funcionario> busquedaFuncionarios(@WebParam(name = "dato") String dato) {
+        try {
+            return con.obtenerFuncionario(dato);
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
+    }
+
+    /**
+     * Web service operation
+     * @param nombre
+     * @param cedula
+     * @return 
+     */
+    @WebMethod(operationName = "eliminarValidacion")
+    public String eliminarValidacion(@WebParam(name = "nombre") String nombre, @WebParam(name = "cedula") String cedula) {
+        try {
+            return con.EliminarValidacion(nombre, cedula);
+        } catch (Exception e) {
+            System.err.println(e);
+            return ""+e;
+        }
+    }
     
     
 

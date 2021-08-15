@@ -3,16 +3,14 @@ package Modelos;
 public class Funcionario {
 
     private String id_persona, nombre, apellido;
-    private int numActivos;
 
     public Funcionario() {
     }
 
-    public Funcionario(String ci, String nombre, String apellido, int numActivos) {
+    public Funcionario(String ci, String nombre, String apellido) {
         this.id_persona = ci;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.numActivos = numActivos;
     }
 
     public String getCi() {
@@ -39,18 +37,10 @@ public class Funcionario {
         this.apellido = apellido;
     }
 
-    public int getNumActivos() {
-        return numActivos;
-    }
-
-    public void setNumActivos(int numActivos) {
-        this.numActivos = numActivos;
-    }
 
     @Override
     public String toString() {
         return "Cedula: " + this.id_persona
-                + "\nNombre: " + this.nombre + " " + this.apellido
-                + "\nN° Activos: " + this.numActivos;
+                + "\nNombre: " + this.nombre + " " + this.apellido;
     }
 }

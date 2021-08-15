@@ -28,13 +28,36 @@ public class Controlador {
             conexion = con.conectar();
             ps = conexion.prepareStatement(sql);
             rs = ps.executeQuery();
-
             while (rs.next()) {
                 Funcionario func = new Funcionario(
                         rs.getString(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        1);
+                        rs.getString(3));
+                lista.add(func);
+            }
+            return lista;
+        } catch (SQLException ex) {
+            System.err.println(ex);
+            return null;
+        }
+    }
+    
+    public List<Funcionario> obtenerFuncionario(String dato) {
+        try {
+            String sql = "SELECT DISTINCT validacion.id_persona,persona.nombre,persona.apellido FROM validacion "
+                    + "INNER JOIN persona on validacion.id_persona = persona.cedula "
+                    + "WHERE id_persona LIKE '%" + dato + "%'"
+                    + "OR persona.nombre LIKE '%" + dato + "%'"
+                    + "OR persona.apellido LIKE '%" + dato + "%'";
+            List<Funcionario> lista = new ArrayList<>();
+            conexion = con.conectar();
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Funcionario func = new Funcionario(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3));
                 lista.add(func);
             }
             return lista;
@@ -88,8 +111,8 @@ public class Controlador {
         }
 
     }
-    
-    public List<Validacion> mostrarValidaciones(){
+
+    public List<Validacion> mostrarValidaciones() {
         try {
             List<Validacion> lista = new ArrayList<>();
             conexion = con.conectar();
@@ -105,8 +128,8 @@ public class Controlador {
             return null;
         }
     }
-    
-    public List<Administrador> listaAdmin(String idAdmin){
+
+    public List<Administrador> listaAdmin(String idAdmin) {
         try {
             List<Administrador> lista = new ArrayList<>();
             conexion = con.conectar();
@@ -122,8 +145,8 @@ public class Controlador {
             return null;
         }
     }
-    
-    public List<Funcionario> listaValidacion(String val){
+
+    public List<Funcionario> listaValidacion(String val) {
         try {
             List<Funcionario> lista = new ArrayList<>();
             conexion = con.conectar();
@@ -136,8 +159,7 @@ public class Controlador {
                 Funcionario func = new Funcionario(
                         rs.getString(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        1);
+                        rs.getString(3));
                 lista.add(func);
             }
             return lista;
@@ -146,8 +168,8 @@ public class Controlador {
             return null;
         }
     }
-    
-    public List<Validacion> nombreValidacion(){
+
+    public List<Validacion> nombreValidacion() {
         try {
             List<Validacion> lista = new ArrayList<>();
             conexion = con.conectar();
@@ -163,8 +185,8 @@ public class Controlador {
             return null;
         }
     }
-    
-    public String guardarValidacion(String nomVal, String cedula, String fecha){
+
+    public String guardarValidacion(String nomVal, String cedula, String fecha) {
         try {
             conexion = con.conectar();
             ps = conexion.prepareStatement("insert into val_funcionarios values(?,?,?)");
@@ -179,8 +201,59 @@ public class Controlador {
             }
         } catch (Exception e) {
             System.err.println(e);
-            return ""+e;
+            return "" + e;
+        }
+    }
+
+    public int obtenerNActivos(String ci) {
+        int n = 0;
+        try {
+            conexion = con.conectar();
+            ps = conexion.prepareStatement("SELECT COUNT(*) AS Total FROM validacion WHERE validacion.id_persona=" + ci + "");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                n = Integer.valueOf(rs.getString(1));
+            }
+            return n;
+        } catch (Exception e) {
+            System.err.println(e);
+            return n;
+        }
+    }
+
+    public List<Validacion> listaValFuncionario(String ci) {
+        List<Validacion> lista = new ArrayList<>();
+        try {
+            conexion = con.conectar();
+            ps = conexion.prepareStatement("SELECT nom_val FROM `val_funcionarios` where cedula = " + ci + "");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Validacion val = new Validacion(rs.getString(1));
+
+                lista.add(val);
+            }
+            return lista;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
         }
     }
     
+    public String EliminarValidacion(String nomVal, String cedula) {
+        try {
+            conexion = con.conectar();
+            ps = conexion.prepareStatement("DELETE FROM val_funcionarios "
+                    + "WHERE val_funcionarios.nom_val = '" + nomVal + "' AND val_funcionarios.cedula = '" + cedula + "'");
+            int n = ps.executeUpdate();
+            if (n > 0) {
+                return "Eliminado";
+            } else {
+                return "No Eliminado";
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+            return "" + e;
+        }
+    }
+
 }
