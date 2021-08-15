@@ -150,7 +150,7 @@ public class Controlador {
         try {
             List<Funcionario> lista = new ArrayList<>();
             conexion = con.conectar();
-            ps = conexion.prepareStatement("SELECT persona.cedula, persona.nombre, persona.apellido "
+            ps = conexion.prepareStatement("SELECT persona.cedula, persona.nombre, persona.apellido, val_funcionarios.estado "
                     + "FROM val_funcionarios "
                     + "INNER JOIN persona on val_funcionarios.cedula = persona.cedula "
                     + "WHERE nom_val='" + val + "'");
@@ -159,7 +159,8 @@ public class Controlador {
                 Funcionario func = new Funcionario(
                         rs.getString(1),
                         rs.getString(2),
-                        rs.getString(3));
+                        rs.getString(3),
+                        rs.getString(4));
                 lista.add(func);
             }
             return lista;
@@ -189,10 +190,11 @@ public class Controlador {
     public String guardarValidacion(String nomVal, String cedula, String fecha) {
         try {
             conexion = con.conectar();
-            ps = conexion.prepareStatement("insert into val_funcionarios values(?,?,?)");
+            ps = conexion.prepareStatement("insert into val_funcionarios values(?,?,?,?)");
             ps.setString(1, nomVal);
             ps.setString(2, cedula);
             ps.setString(3, fecha);
+            ps.setString(4, "Revisión");
             int n = ps.executeUpdate();
             if (n > 0) {
                 return "Insertado";

@@ -2,7 +2,7 @@ package Modelos;
 
 public class Funcionario {
 
-    private String id_persona, nombre, apellido;
+    private String id_persona, nombre, apellido, estado;
 
     public Funcionario() {
     }
@@ -12,6 +12,23 @@ public class Funcionario {
         this.nombre = nombre;
         this.apellido = apellido;
     }
+
+    public Funcionario(String id_persona, String nombre, String apellido, String estado) {
+        this.id_persona = id_persona;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.estado = estado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+    
 
     public String getCi() {
         return id_persona;
